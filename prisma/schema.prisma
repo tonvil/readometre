@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Usuari {
+  id             String         @id
+  nom            String
+  cognom         String
+  email          String         @unique
+  edat           Int
+  createdAt      DateTime       @default(now())
+  readingEntries ReadingEntry[]
+}
+
+model Book {
+  id             String         @id @default(uuid())
+  title          String
+  author         String
+  genre          String?
+  pageCount      Int?
+  readingEntries ReadingEntry[]
+}
+
+enum ReadingStatus {
+  reading
+  finished
+  abandoned
+}
+
+model ReadingEntry {
+  id        String        @id @default(uuid())
+  bookId    String
+  book      Book          @relation(fields: [bookId], references: [id])
+  usuariId  String
+  usuari    Usuari        @relation(fields: [usuariId], references: [id])
+  startDate DateTime
+  endDate   DateTime?
+  status    ReadingStatus
+  rating    Int?
+  notes     String?
+}
