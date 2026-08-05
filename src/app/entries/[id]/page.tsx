@@ -29,7 +29,7 @@ export default async function EntryDetailPage({
     where: { id },
     include: {
       book: true,
-      readingSessions: { orderBy: { date: "desc" } },
+      readingSessions: { orderBy: [{ date: "desc" }, { createdAt: "desc" }] },
     },
   });
 

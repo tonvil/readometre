@@ -54,4 +54,5 @@ model ReadingSession {
   readingEntry   ReadingEntry @relation(fields: [readingEntryId], references: [id])
   date           DateTime
   page           Int
+  createdAt      DateTime     @default(now())
 }
