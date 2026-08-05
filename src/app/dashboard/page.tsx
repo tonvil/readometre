@@ -19,15 +19,54 @@ export default async function DashboardPage() {
     redirect("/onboarding");
   }
 
+  const readingEntries = await prisma.readingEntry.findMany({
+    where: { usuariId: usuari.id },
+    include: { book: true },
+    orderBy: { startDate: "desc" },
+  });
+
+  const sections = [
+    {
+      title: "Llegint ara",
+      entries: readingEntries.filter((e) => e.status === "reading"),
+    },
+    {
+      title: "Finalitzats",
+      entries: readingEntries.filter((e) => e.status === "finished"),
+    },
+    {
+      title: "Abandonats",
+      entries: readingEntries.filter((e) => e.status === "abandoned"),
+    },
+  ].filter((section) => section.entries.length > 0);
+
   return (
     <main className="mx-auto mt-20 max-w-sm space-y-6">
       <h1 className="text-2xl font-bold">Benvingut, {usuari.nom}</h1>
       <a href="/books/new" className="inline-block border p-2">
         Afegeix un llibre
       </a>
-      <p className="text-sm text-gray-600">
-        Aquí aniran els teus llibres i estadístiques (properament).
-      </p>
+      {readingEntries.length === 0 ? (
+        <p className="text-sm text-gray-600">Encara no has afegit cap llibre.</p>
+      ) : (
+        <div className="space-y-6">
+          {sections.map((section) => (
+            <div key={section.title} className="space-y-2">
+              <h2 className="text-lg font-semibold">{section.title}</h2>
+              <ul className="space-y-1">
+                {section.entries.map((entry) => (
+                  <li key={entry.id} className="text-sm">
+                    <span className="font-medium">{entry.book.title}</span>
+                    {" — "}
+                    {entry.book.author}
+                    {entry.book.genre ? ` (${entry.book.genre})` : ""}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
       <form action={logout}>
         <button type="submit" className="border p-2">
           Tanca sessió
