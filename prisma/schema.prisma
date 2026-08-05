@@ -35,14 +35,23 @@ enum ReadingStatus {
 }
 
 model ReadingEntry {
-  id        String        @id @default(uuid())
-  bookId    String
-  book      Book          @relation(fields: [bookId], references: [id])
-  usuariId  String
-  usuari    Usuari        @relation(fields: [usuariId], references: [id])
-  startDate DateTime
-  endDate   DateTime?
-  status    ReadingStatus
-  rating    Int?
-  notes     String?
+  id              String           @id @default(uuid())
+  bookId          String
+  book            Book             @relation(fields: [bookId], references: [id])
+  usuariId        String
+  usuari          Usuari           @relation(fields: [usuariId], references: [id])
+  startDate       DateTime
+  endDate         DateTime?
+  status          ReadingStatus
+  rating          Int?
+  notes           String?
+  readingSessions ReadingSession[]
+}
+
+model ReadingSession {
+  id             String       @id @default(uuid())
+  readingEntryId String
+  readingEntry   ReadingEntry @relation(fields: [readingEntryId], references: [id])
+  date           DateTime
+  page           Int
 }
