@@ -68,7 +68,7 @@ export async function updateEntry(readingEntryId: string, formData: FormData) {
 
   const ratingRaw = formData.get("rating") as string;
   const rating = ratingRaw ? Number(ratingRaw) : null;
-  if (rating !== null && (Number.isNaN(rating) || rating < 1 || rating > 5)) {
+  if (rating !== null && (Number.isNaN(rating) || !Number.isInteger(rating) || rating < 1 || rating > 5)) {
     return { error: "La valoració ha de ser un número enter entre 1 i 5." };
   }
 
@@ -80,6 +80,10 @@ export async function updateEntry(readingEntryId: string, formData: FormData) {
     endDate = null;
   } else {
     endDate = endDateRaw ? new Date(endDateRaw) : new Date();
+  }
+
+  if (endDate !== null && Number.isNaN(endDate.getTime())) {
+    return { error: "Data de finalització no vàlida." };
   }
 
   if (endDate !== null && endDate < entry.startDate) {
