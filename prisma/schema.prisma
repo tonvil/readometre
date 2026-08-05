@@ -13,7 +13,7 @@ model Usuari {
   nom            String
   cognom         String
   email          String         @unique
-  edat           Int
+  dataNaixement  DateTime?
   createdAt      DateTime       @default(now())
   readingEntries ReadingEntry[]
 }

@@ -18,7 +18,7 @@ Previsió de pocs usuari
 
 ## Model de dades
 
-- Usuari: Nom, Cognom, email, edat
+- Usuari: Nom, Cognom, email, data de naixement (opcional)
 - Book: title, author, genre, pageCount (opcional)
 - ReadingEntry: bookId, startDate, endDate (nul·lable), status (reading/finished/abandoned),
   rating (1-5, opcional), notes

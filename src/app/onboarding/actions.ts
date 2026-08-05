@@ -16,10 +16,10 @@ export async function completeProfile(formData: FormData) {
 
   const nom = formData.get("nom") as string;
   const cognom = formData.get("cognom") as string;
-  const edat = Number(formData.get("edat"));
+  const dataNaixement = formData.get("dataNaixement") as string;
 
-  if (!nom || !cognom || !edat) {
-    return { error: "Omple tots els camps." };
+  if (!nom || !cognom) {
+    return { error: "Omple el nom i el cognom." };
   }
 
   await prisma.usuari.create({
@@ -28,7 +28,7 @@ export async function completeProfile(formData: FormData) {
       nom,
       cognom,
       email: user.email!,
-      edat,
+      dataNaixement: dataNaixement ? new Date(dataNaixement) : undefined,
     },
   });
 

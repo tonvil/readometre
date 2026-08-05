@@ -17,7 +17,7 @@ export default function OnboardingPage() {
       <form action={handleSubmit} className="space-y-4">
         <input name="nom" placeholder="Nom" required className="w-full border p-2" />
         <input name="cognom" placeholder="Cognom" required className="w-full border p-2" />
-        <input name="edat" type="number" placeholder="Edat" required min={1} className="w-full border p-2" />
+        <input name="dataNaixement" type="date" placeholder="Data de naixement" className="w-full border p-2" />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button type="submit" className="w-full bg-black p-2 text-white">
           Guarda i continua
