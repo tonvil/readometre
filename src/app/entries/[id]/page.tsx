@@ -2,6 +2,11 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import SessionForm from "./session-form";
+import EntryEditForm from "./entry-edit-form";
+
+function toDateInputValue(date: Date | null): string | null {
+  return date ? date.toISOString().slice(0, 10) : null;
+}
 
 export default async function EntryDetailPage({
   params,
@@ -57,6 +62,13 @@ export default async function EntryDetailPage({
           {progressPercent}%
         </p>
       )}
+      <EntryEditForm
+        readingEntryId={entry.id}
+        status={entry.status}
+        rating={entry.rating}
+        notes={entry.notes}
+        endDate={toDateInputValue(entry.endDate)}
+      />
       <SessionForm readingEntryId={entry.id} />
       {entry.readingSessions.length > 0 && (
         <div className="space-y-2">
