@@ -71,7 +71,9 @@ export default async function DashboardPage() {
                 <ul className="space-y-1">
                   {section.entries.map((entry) => (
                     <li key={entry.id} className="text-sm">
-                      <span className="font-medium">{entry.book.title}</span>
+                      <a href={`/entries/${entry.id}`} className="font-medium underline">
+                        {entry.book.title}
+                      </a>
                       {" — "}
                       {entry.book.author}
                       {entry.book.genre ? ` (${entry.book.genre})` : ""}
