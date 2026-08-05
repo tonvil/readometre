@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { ReadingStatus } from "@prisma/client";
 import { updateEntry } from "./actions";
 
 export default function EntryEditForm({
@@ -11,7 +12,7 @@ export default function EntryEditForm({
   endDate,
 }: {
   readingEntryId: string;
-  status: string;
+  status: ReadingStatus;
   rating: number | null;
   notes: string | null;
   endDate: string | null;

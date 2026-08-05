@@ -42,6 +42,11 @@ export async function addSession(readingEntryId: string, formData: FormData) {
   redirect(`/entries/${readingEntryId}`);
 }
 
+function todayUtcMidnight(): Date {
+  const now = new Date();
+  return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+}
+
 export async function updateEntry(readingEntryId: string, formData: FormData) {
   const supabase = await createClient();
   const {
@@ -68,7 +73,7 @@ export async function updateEntry(readingEntryId: string, formData: FormData) {
 
   const ratingRaw = formData.get("rating") as string;
   const rating = ratingRaw ? Number(ratingRaw) : null;
-  if (rating !== null && (Number.isNaN(rating) || !Number.isInteger(rating) || rating < 1 || rating > 5)) {
+  if (rating !== null && (!Number.isInteger(rating) || rating < 1 || rating > 5)) {
     return { error: "La valoració ha de ser un número enter entre 1 i 5." };
   }
 
@@ -79,7 +84,7 @@ export async function updateEntry(readingEntryId: string, formData: FormData) {
   if (status === "reading") {
     endDate = null;
   } else {
-    endDate = endDateRaw ? new Date(endDateRaw) : new Date();
+    endDate = endDateRaw ? new Date(endDateRaw) : todayUtcMidnight();
   }
 
   if (endDate !== null && Number.isNaN(endDate.getTime())) {
