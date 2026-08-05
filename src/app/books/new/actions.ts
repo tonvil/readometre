@@ -84,6 +84,11 @@ export async function saveBook(formData: FormData) {
     redirect("/login");
   }
 
+  const usuari = await prisma.usuari.findUnique({ where: { id: user.id } });
+  if (!usuari) {
+    redirect("/onboarding");
+  }
+
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
 
@@ -98,6 +103,11 @@ export async function saveBook(formData: FormData) {
     return { error: "Omple l'estat i la data d'inici." };
   }
 
+  const validStatuses: ReadingStatus[] = ["reading", "finished", "abandoned"];
+  if (!validStatuses.includes(status as ReadingStatus)) {
+    return { error: "Estat no vàlid." };
+  }
+
   const isbnRaw = formData.get("isbn") as string;
   const isbn = isbnRaw ? isbnRaw.replace(/[-\s]/g, "") : null;
   const genre = (formData.get("genre") as string) || null;
@@ -105,8 +115,20 @@ export async function saveBook(formData: FormData) {
   const pageCount = pageCountRaw ? Number(pageCountRaw) : null;
   const endDateRaw = formData.get("endDate") as string;
   const ratingRaw = formData.get("rating") as string;
+  const rating = ratingRaw ? Number(ratingRaw) : null;
   const notes = (formData.get("notes") as string) || null;
 
+  if (pageCount !== null && Number.isNaN(pageCount)) {
+    return { error: "El nombre de pàgines no és un número vàlid." };
+  }
+
+  if (rating !== null && Number.isNaN(rating)) {
+    return { error: "La valoració no és un número vàlid." };
+  }
+
+  // Book és un catàleg compartit: si l'ISBN ja existeix, es reutilitza l'entrada
+  // existent i els canvis de títol/autor fets manualment en aquest formulari
+  // es descarten intencionadament (mai se sobreescriu un Book existent).
   let book = isbn ? await prisma.book.findUnique({ where: { isbn } }) : null;
 
   if (!book) {
@@ -122,7 +144,7 @@ export async function saveBook(formData: FormData) {
       status: status as ReadingStatus,
       startDate: new Date(startDate),
       endDate: endDateRaw ? new Date(endDateRaw) : null,
-      rating: ratingRaw ? Number(ratingRaw) : null,
+      rating,
       notes,
     },
   });
