@@ -25,6 +25,16 @@ export default async function DashboardPage() {
     orderBy: { startDate: "desc" },
   });
 
+  const finishedCount = readingEntries.filter(
+    (e) => e.status === "finished",
+  ).length;
+  const readingCount = readingEntries.filter(
+    (e) => e.status === "reading",
+  ).length;
+  const totalPages = readingEntries
+    .filter((e) => e.status === "finished")
+    .reduce((sum, e) => sum + (e.book.pageCount ?? 0), 0);
+
   const sections = [
     {
       title: "Llegint ara",
@@ -49,23 +59,29 @@ export default async function DashboardPage() {
       {readingEntries.length === 0 ? (
         <p className="text-sm text-gray-600">Encara no has afegit cap llibre.</p>
       ) : (
-        <div className="space-y-6">
-          {sections.map((section) => (
-            <div key={section.title} className="space-y-2">
-              <h2 className="text-lg font-semibold">{section.title}</h2>
-              <ul className="space-y-1">
-                {section.entries.map((entry) => (
-                  <li key={entry.id} className="text-sm">
-                    <span className="font-medium">{entry.book.title}</span>
-                    {" — "}
-                    {entry.book.author}
-                    {entry.book.genre ? ` (${entry.book.genre})` : ""}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <>
+          <p className="text-sm text-gray-600">
+            {finishedCount} llibres finalitzats · {readingCount} en curs ·{" "}
+            {totalPages} pàgines llegides
+          </p>
+          <div className="space-y-6">
+            {sections.map((section) => (
+              <div key={section.title} className="space-y-2">
+                <h2 className="text-lg font-semibold">{section.title}</h2>
+                <ul className="space-y-1">
+                  {section.entries.map((entry) => (
+                    <li key={entry.id} className="text-sm">
+                      <span className="font-medium">{entry.book.title}</span>
+                      {" — "}
+                      {entry.book.author}
+                      {entry.book.genre ? ` (${entry.book.genre})` : ""}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
       )}
       <form action={logout}>
         <button type="submit" className="border p-2">
