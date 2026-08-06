@@ -19,43 +19,37 @@ export default async function HistoryPage() {
     redirect("/onboarding");
   }
 
-  const finishedEntries = await prisma.readingEntry.findMany({
-    where: {
-      usuariId: usuari.id,
-      status: "finished",
-    },
+  const entries = await prisma.readingEntry.findMany({
+    where: { usuariId: usuari.id, status: "finished" },
     include: { book: true },
-    orderBy: { endDate: "desc" },
   });
+
+  entries.sort(
+    (a, b) =>
+      (b.endDate ?? b.startDate).getTime() -
+      (a.endDate ?? a.startDate).getTime(),
+  );
 
   return (
     <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">Historial de lectures</h1>
-      {finishedEntries.length === 0 ? (
-        <p className="text-sm text-gray-600">Encara no has finalitzat cap llibre.</p>
+      <h1 className="text-2xl font-bold">Historial de lectura</h1>
+      {entries.length === 0 ? (
+        <p className="text-sm text-gray-600">Encara no has acabat cap llibre.</p>
       ) : (
-        <>
-          <p className="text-sm text-gray-600">
-            {finishedEntries.length} llibres finalitzats
-          </p>
-          <ul className="space-y-3">
-            {finishedEntries.map((entry) => (
-              <li key={entry.id} className="space-y-1 border-b pb-3">
-                <a href={`/entries/${entry.id}`} className="font-medium underline">
-                  {entry.book.title}
-                </a>
-                <p className="text-sm text-gray-600">{entry.book.author}</p>
-                {entry.book.genre && (
-                  <p className="text-sm text-gray-600">{entry.book.genre}</p>
-                )}
-                <p className="text-sm">{formatStars(entry.rating)}</p>
-                {entry.notes && (
-                  <p className="text-sm text-gray-700">{entry.notes}</p>
-                )}
-              </li>
-            ))}
-          </ul>
-        </>
+        <ul className="space-y-3">
+          {entries.map((entry) => (
+            <li key={entry.id} className="text-sm">
+              <a href={`/entries/${entry.id}`} className="font-medium underline">
+                {entry.book.title}
+              </a>
+              {" — "}
+              {entry.book.author}
+              {entry.book.genre ? ` (${entry.book.genre})` : ""}
+              <br />
+              {formatStars(entry.rating)}
+            </li>
+          ))}
+        </ul>
       )}
       <a href="/dashboard" className="inline-block border p-2">
         Torna al dashboard
