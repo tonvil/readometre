@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { updateBook } from "./actions";
+import Panel from "@/components/panel";
 
 export default function BookEditForm({
   bookId,
@@ -26,43 +27,48 @@ export default function BookEditForm({
   }
 
   return (
-    <form action={handleSubmit} className="space-y-4">
-      {isbn && <p className="text-sm text-gray-600">ISBN: {isbn}</p>}
-      <input
-        name="title"
-        type="text"
-        placeholder="Títol"
-        defaultValue={title}
-        required
-        className="w-full border p-2"
-      />
-      <input
-        name="author"
-        type="text"
-        placeholder="Autor"
-        defaultValue={author}
-        required
-        className="w-full border p-2"
-      />
-      <input
-        name="genre"
-        type="text"
-        placeholder="Gènere"
-        defaultValue={genre ?? ""}
-        className="w-full border p-2"
-      />
-      <input
-        name="pageCount"
-        type="number"
-        min={1}
-        placeholder="Nombre de pàgines"
-        defaultValue={pageCount ?? ""}
-        className="w-full border p-2"
-      />
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <button type="submit" className="w-full bg-black p-2 text-white">
-        Desa el llibre
-      </button>
-    </form>
+    <Panel label="Dades del llibre">
+      <form action={handleSubmit} className="space-y-4">
+        {isbn && <p className="text-sm text-ink-muted">ISBN: {isbn}</p>}
+        <input
+          name="title"
+          type="text"
+          placeholder="Títol"
+          defaultValue={title}
+          required
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        <input
+          name="author"
+          type="text"
+          placeholder="Autor"
+          defaultValue={author}
+          required
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        <input
+          name="genre"
+          type="text"
+          placeholder="Gènere"
+          defaultValue={genre ?? ""}
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        <input
+          name="pageCount"
+          type="number"
+          min={1}
+          placeholder="Nombre de pàgines"
+          defaultValue={pageCount ?? ""}
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        {error && <p className="text-sm text-danger">{error}</p>}
+        <button
+          type="submit"
+          className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
+        >
+          Desa el llibre
+        </button>
+      </form>
+    </Panel>
   );
 }

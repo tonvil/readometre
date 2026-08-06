@@ -17,17 +17,25 @@ export default function SessionForm({
 
   return (
     <form action={handleSubmit} className="space-y-4">
-      <input name="date" type="date" required className="w-full border p-2" />
+      <input
+        name="date"
+        type="date"
+        required
+        className="w-full rounded border border-field-border bg-field-bg p-2 text-ink"
+      />
       <input
         name="page"
         type="number"
         min={1}
         placeholder="Pàgina"
         required
-        className="w-full border p-2"
+        className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <button type="submit" className="w-full bg-black p-2 text-white">
+      {error && <p className="text-sm text-danger">{error}</p>}
+      <button
+        type="submit"
+        className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
+      >
         Registra sessió
       </button>
     </form>

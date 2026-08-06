@@ -40,7 +40,7 @@ export default function SessionRow({
             type="date"
             defaultValue={dateValue}
             required
-            className="border p-1"
+            className="rounded border border-field-border bg-field-bg p-1 text-ink"
           />
           <input
             name="page"
@@ -48,33 +48,36 @@ export default function SessionRow({
             min={1}
             defaultValue={page}
             required
-            className="w-20 border p-1"
+            className="w-20 rounded border border-field-border bg-field-bg p-1 text-ink"
           />
-          <button type="submit" className="border px-2 py-1">
+          <button
+            type="submit"
+            className="rounded border border-field-border px-2 py-1 text-ink"
+          >
             Desa
           </button>
           <button
             type="button"
             onClick={() => setIsEditing(false)}
-            className="border px-2 py-1"
+            className="rounded border border-field-border px-2 py-1 text-ink"
           >
             Cancel·la
           </button>
         </form>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-danger">{error}</p>}
       </li>
     );
   }
 
   return (
-    <li className="flex items-center gap-2 text-sm">
+    <li className="flex items-center gap-2 text-sm text-ink">
       <span>
         {dateDisplay} — pàgina {page}
       </span>
-      <button onClick={() => setIsEditing(true)} className="underline">
+      <button onClick={() => setIsEditing(true)} className="text-accent underline">
         Edita
       </button>
-      <button onClick={handleDelete} className="underline">
+      <button onClick={handleDelete} className="text-danger underline">
         Esborra
       </button>
     </li>
