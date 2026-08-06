@@ -1,4 +1,5 @@
 export function formatStars(rating: number | null): string {
   if (rating === null) return "Sense valoració";
-  return "★".repeat(rating) + "☆".repeat(5 - rating);
+  const clamped = Math.max(0, Math.min(5, Math.round(rating)));
+  return "★".repeat(clamped) + "☆".repeat(5 - clamped);
 }
