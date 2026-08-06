@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import SessionForm from "./session-form";
 import EntryEditForm from "./entry-edit-form";
+import SessionRow from "./session-row";
 
 function toDateInputValue(date: Date | null): string | null {
   return date ? date.toISOString().slice(0, 10) : null;
@@ -75,10 +76,13 @@ export default async function EntryDetailPage({
           <h2 className="text-lg font-semibold">Sessions</h2>
           <ul className="space-y-1">
             {entry.readingSessions.map((session) => (
-              <li key={session.id} className="text-sm">
-                {session.date.toLocaleDateString("ca")} — pàgina{" "}
-                {session.page}
-              </li>
+              <SessionRow
+                key={session.id}
+                sessionId={session.id}
+                page={session.page}
+                dateDisplay={session.date.toLocaleDateString("ca")}
+                dateValue={session.date.toISOString().slice(0, 10)}
+              />
             ))}
           </ul>
         </div>
