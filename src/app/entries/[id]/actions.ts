@@ -109,3 +109,65 @@ export async function updateEntry(readingEntryId: string, formData: FormData) {
 
   redirect(`/entries/${readingEntryId}`);
 }
+
+export async function updateSession(sessionId: string, formData: FormData) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const session = await prisma.readingSession.findUnique({
+    where: { id: sessionId },
+    include: { readingEntry: true },
+  });
+
+  if (!session || session.readingEntry.usuariId !== user.id) {
+    redirect("/dashboard");
+  }
+
+  const date = formData.get("date") as string;
+  const pageRaw = formData.get("page") as string;
+  const page = Number(pageRaw);
+
+  if (!date || !pageRaw || Number.isNaN(page) || page < 1) {
+    return { error: "Introdueix una data i una pàgina vàlides." };
+  }
+
+  await prisma.readingSession.update({
+    where: { id: sessionId },
+    data: {
+      date: new Date(date),
+      page,
+    },
+  });
+
+  redirect(`/entries/${session.readingEntryId}`);
+}
+
+export async function deleteSession(sessionId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const session = await prisma.readingSession.findUnique({
+    where: { id: sessionId },
+    include: { readingEntry: true },
+  });
+
+  if (!session || session.readingEntry.usuariId !== user.id) {
+    redirect("/dashboard");
+  }
+
+  await prisma.readingSession.delete({ where: { id: sessionId } });
+
+  redirect(`/entries/${session.readingEntryId}`);
+}
