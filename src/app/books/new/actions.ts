@@ -122,8 +122,8 @@ export async function saveBook(formData: FormData) {
     return { error: "El nombre de pàgines no és un número vàlid." };
   }
 
-  if (rating !== null && Number.isNaN(rating)) {
-    return { error: "La valoració no és un número vàlid." };
+  if (rating !== null && (!Number.isInteger(rating) || rating < 1 || rating > 5)) {
+    return { error: "La valoració ha de ser un número enter entre 1 i 5." };
   }
 
   // Book és un catàleg compartit: si l'ISBN ja existeix, es reutilitza l'entrada
