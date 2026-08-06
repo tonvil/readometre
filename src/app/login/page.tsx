@@ -35,6 +35,11 @@ export default function LoginPage() {
         Continua amb Google
       </button>
       <p className="text-sm">
+        <a href="/forgot-password" className="underline">
+          Has oblidat la contrasenya?
+        </a>
+      </p>
+      <p className="text-sm">
         No tens compte? <a href="/signup" className="underline">Registra&apos;t</a>
       </p>
     </main>
