@@ -6,6 +6,7 @@ import EntryEditForm from "./entry-edit-form";
 import SessionRow from "./session-row";
 import DeleteEntryButton from "./delete-entry-button";
 import BookEditForm from "./book-edit-form";
+import Panel from "@/components/panel";
 
 function toDateInputValue(date: Date | null): string | null {
   return date ? date.toISOString().slice(0, 10) : null;
@@ -55,12 +56,14 @@ export default async function EntryDetailPage({
       : null;
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">{entry.book.title}</h1>
-      <p className="text-sm text-gray-600">{entry.book.author}</p>
-      <p className="text-sm text-gray-600">Estat: {entry.status}</p>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        {entry.book.title}
+      </h1>
+      <p className="text-sm text-ink-muted">{entry.book.author}</p>
+      <p className="text-sm text-ink-muted">Estat: {entry.status}</p>
       {progressPercent !== null && (
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-ink-muted">
           {latestSession.page} de {entry.book.pageCount} pàgines ·{" "}
           {progressPercent}%
         </p>
@@ -83,8 +86,7 @@ export default async function EntryDetailPage({
       />
       <SessionForm readingEntryId={entry.id} />
       {entry.readingSessions.length > 0 && (
-        <div className="space-y-2">
-          <h2 className="text-lg font-semibold">Sessions</h2>
+        <Panel label="Sessions de lectura">
           <ul className="space-y-1">
             {entry.readingSessions.map((session) => (
               <SessionRow
@@ -96,9 +98,12 @@ export default async function EntryDetailPage({
               />
             ))}
           </ul>
-        </div>
+        </Panel>
       )}
-      <a href="/dashboard" className="inline-block border p-2">
+      <a
+        href="/dashboard"
+        className="inline-block rounded border border-field-border p-2 text-ink"
+      >
         Torna al dashboard
       </a>
     </main>

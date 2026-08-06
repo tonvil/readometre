@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteEntry } from "./actions";
+import Panel from "@/components/panel";
 
 export default function DeleteEntryButton({
   readingEntryId,
@@ -18,8 +19,13 @@ export default function DeleteEntryButton({
   }
 
   return (
-    <button onClick={handleDelete} className="border p-2">
-      Esborra aquest llibre
-    </button>
+    <Panel label="Zona de perill" variant="danger">
+      <button
+        onClick={handleDelete}
+        className="rounded border border-danger-border px-3 py-1.5 text-sm text-danger"
+      >
+        Esborra aquest llibre
+      </button>
+    </Panel>
   );
 }
