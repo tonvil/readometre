@@ -53,9 +53,14 @@ export default async function DashboardPage() {
   return (
     <main className="mx-auto mt-20 max-w-sm space-y-6">
       <h1 className="text-2xl font-bold">Benvingut, {usuari.nom}</h1>
-      <a href="/books/new" className="inline-block border p-2">
-        Afegeix un llibre
-      </a>
+      <div className="flex gap-2">
+        <a href="/books/new" className="inline-block border p-2">
+          Afegeix un llibre
+        </a>
+        <a href="/history" className="inline-block border p-2">
+          Historial de lectura
+        </a>
+      </div>
       {readingEntries.length === 0 ? (
         <p className="text-sm text-gray-600">Encara no has afegit cap llibre.</p>
       ) : (
