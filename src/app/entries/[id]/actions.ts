@@ -197,3 +197,47 @@ export async function deleteEntry(readingEntryId: string) {
 
   redirect("/dashboard");
 }
+
+export async function updateBook(bookId: string, formData: FormData) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const ownEntry = await prisma.readingEntry.findFirst({
+    where: { bookId, usuariId: user.id },
+  });
+
+  if (!ownEntry) {
+    redirect("/dashboard");
+  }
+
+  const title = formData.get("title") as string;
+  const author = formData.get("author") as string;
+
+  if (!title || !author) {
+    return { error: "Omple el títol i l'autor." };
+  }
+
+  const genre = (formData.get("genre") as string) || null;
+  const pageCountRaw = formData.get("pageCount") as string;
+  const pageCount = pageCountRaw ? Number(pageCountRaw) : null;
+
+  if (
+    pageCount !== null &&
+    (!Number.isInteger(pageCount) || pageCount < 1)
+  ) {
+    return { error: "El nombre de pàgines ha de ser un enter positiu." };
+  }
+
+  await prisma.book.update({
+    where: { id: bookId },
+    data: { title, author, genre, pageCount },
+  });
+
+  redirect(`/entries/${ownEntry.id}`);
+}
