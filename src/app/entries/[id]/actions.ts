@@ -171,3 +171,29 @@ export async function deleteSession(sessionId: string) {
 
   redirect(`/entries/${session.readingEntryId}`);
 }
+
+export async function deleteEntry(readingEntryId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const entry = await prisma.readingEntry.findUnique({
+    where: { id: readingEntryId },
+  });
+
+  if (!entry || entry.usuariId !== user.id) {
+    redirect("/dashboard");
+  }
+
+  await prisma.$transaction([
+    prisma.readingSession.deleteMany({ where: { readingEntryId } }),
+    prisma.readingEntry.delete({ where: { id: readingEntryId } }),
+  ]);
+
+  redirect("/dashboard");
+}
