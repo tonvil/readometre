@@ -32,8 +32,10 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">Estableix una contrasenya nova</h1>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        Estableix una contrasenya nova
+      </h1>
       <form action={handleSubmit} className="space-y-4">
         <input
           name="password"
@@ -41,7 +43,7 @@ export default function ResetPasswordPage() {
           placeholder="Contrasenya nova"
           required
           minLength={6}
-          className="w-full border p-2"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
         />
         <input
           name="confirmPassword"
@@ -49,15 +51,18 @@ export default function ResetPasswordPage() {
           placeholder="Repeteix la contrasenya"
           required
           minLength={6}
-          className="w-full border p-2"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
         />
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button type="submit" className="w-full bg-black p-2 text-white">
+        {error && <p className="text-sm text-danger">{error}</p>}
+        <button
+          type="submit"
+          className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
+        >
           Desa la contrasenya
         </button>
       </form>
-      <p className="text-sm">
-        <a href="/forgot-password" className="underline">
+      <p className="text-sm text-ink">
+        <a href="/forgot-password" className="text-accent underline">
           Torna a demanar un enllaç
         </a>
       </p>

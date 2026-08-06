@@ -16,8 +16,8 @@ export default function ForgotPasswordPage() {
 
   if (success) {
     return (
-      <main className="mx-auto mt-20 max-w-sm space-y-6">
-        <p className="text-sm text-gray-600">
+      <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+        <p className="text-sm text-ink-muted">
           Si l&apos;email existeix, rebràs un enllaç per restablir la
           contrasenya.
         </p>
@@ -26,22 +26,27 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">Recupera la contrasenya</h1>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        Recupera la contrasenya
+      </h1>
       <form action={handleSubmit} className="space-y-4">
         <input
           name="email"
           type="email"
           placeholder="Email"
           required
-          className="w-full border p-2"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
         />
-        <button type="submit" className="w-full bg-black p-2 text-white">
+        <button
+          type="submit"
+          className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
+        >
           Envia l&apos;enllaç
         </button>
       </form>
-      <p className="text-sm">
-        <a href="/login" className="underline">
+      <p className="text-sm text-ink">
+        <a href="/login" className="text-accent underline">
           Torna a l&apos;inici de sessió
         </a>
       </p>

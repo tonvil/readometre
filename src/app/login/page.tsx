@@ -21,26 +21,49 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">Inicia sessió</h1>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        Inicia sessió
+      </h1>
       <form action={handleSubmit} className="space-y-4">
-        <input name="email" type="email" placeholder="Email" required className="w-full border p-2" />
-        <input name="password" type="password" placeholder="Contrasenya" required className="w-full border p-2" />
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button type="submit" className="w-full bg-black p-2 text-white">
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Contrasenya"
+          required
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        {error && <p className="text-sm text-danger">{error}</p>}
+        <button
+          type="submit"
+          className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
+        >
           Entra
         </button>
       </form>
-      <button onClick={handleGoogleLogin} className="w-full border p-2">
+      <button
+        onClick={handleGoogleLogin}
+        className="w-full rounded border border-field-border p-2 text-ink"
+      >
         Continua amb Google
       </button>
-      <p className="text-sm">
-        <a href="/forgot-password" className="underline">
+      <p className="text-sm text-ink">
+        <a href="/forgot-password" className="text-accent underline">
           Has oblidat la contrasenya?
         </a>
       </p>
-      <p className="text-sm">
-        No tens compte? <a href="/signup" className="underline">Registra&apos;t</a>
+      <p className="text-sm text-ink">
+        No tens compte?{" "}
+        <a href="/signup" className="text-accent underline">
+          Registra&apos;t
+        </a>
       </p>
     </main>
   );
