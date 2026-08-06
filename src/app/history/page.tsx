@@ -31,27 +31,37 @@ export default async function HistoryPage() {
   );
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">Historial de lectura</h1>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        Historial de lectura
+      </h1>
       {entries.length === 0 ? (
-        <p className="text-sm text-gray-600">Encara no has acabat cap llibre.</p>
+        <p className="text-sm text-ink-muted">
+          Encara no has acabat cap llibre.
+        </p>
       ) : (
         <ul className="space-y-3">
           {entries.map((entry) => (
-            <li key={entry.id} className="text-sm">
-              <a href={`/entries/${entry.id}`} className="font-medium underline">
+            <li key={entry.id} className="text-sm text-ink">
+              <a
+                href={`/entries/${entry.id}`}
+                className="font-medium text-accent underline"
+              >
                 {entry.book.title}
               </a>
               {" — "}
               {entry.book.author}
               {entry.book.genre ? ` (${entry.book.genre})` : ""}
               <br />
-              {formatStars(entry.rating)}
+              <span className="text-ink-muted">{formatStars(entry.rating)}</span>
             </li>
           ))}
         </ul>
       )}
-      <a href="/dashboard" className="inline-block border p-2">
+      <a
+        href="/dashboard"
+        className="inline-block rounded border border-field-border p-2 text-ink"
+      >
         Torna al dashboard
       </a>
     </main>
