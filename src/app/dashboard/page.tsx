@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { logout } from "./actions";
+import Panel from "@/components/panel";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -51,32 +52,44 @@ export default async function DashboardPage() {
   ].filter((section) => section.entries.length > 0);
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6">
-      <h1 className="text-2xl font-bold">Benvingut, {usuari.nom}</h1>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        Benvingut, {usuari.nom}
+      </h1>
       <div className="flex gap-2">
-        <a href="/books/new" className="inline-block border p-2">
+        <a
+          href="/books/new"
+          className="inline-block rounded border border-field-border p-2 text-ink"
+        >
           Afegeix un llibre
         </a>
-        <a href="/history" className="inline-block border p-2">
+        <a
+          href="/history"
+          className="inline-block rounded border border-field-border p-2 text-ink"
+        >
           Historial de lectura
         </a>
       </div>
       {readingEntries.length === 0 ? (
-        <p className="text-sm text-gray-600">Encara no has afegit cap llibre.</p>
+        <p className="text-sm text-ink-muted">
+          Encara no has afegit cap llibre.
+        </p>
       ) : (
         <>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-ink-muted">
             {finishedCount} llibres finalitzats · {readingCount} en curs ·{" "}
             {totalPages} pàgines llegides
           </p>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {sections.map((section) => (
-              <div key={section.title} className="space-y-2">
-                <h2 className="text-lg font-semibold">{section.title}</h2>
+              <Panel key={section.title} label={section.title}>
                 <ul className="space-y-1">
                   {section.entries.map((entry) => (
-                    <li key={entry.id} className="text-sm">
-                      <a href={`/entries/${entry.id}`} className="font-medium underline">
+                    <li key={entry.id} className="text-sm text-ink">
+                      <a
+                        href={`/entries/${entry.id}`}
+                        className="font-medium text-accent underline"
+                      >
                         {entry.book.title}
                       </a>
                       {" — "}
@@ -85,13 +98,16 @@ export default async function DashboardPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Panel>
             ))}
           </div>
         </>
       )}
       <form action={logout}>
-        <button type="submit" className="border p-2">
+        <button
+          type="submit"
+          className="rounded border border-field-border p-2 text-ink"
+        >
           Tanca sessió
         </button>
       </form>
