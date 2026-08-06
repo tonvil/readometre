@@ -25,6 +25,9 @@ export default function ResetPasswordPage() {
       return;
     }
 
+    // Full page navigation (not router.push) so the middleware-protected
+    // /dashboard route sees the session cookies Supabase just set.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = "/dashboard";
   }
 
@@ -53,6 +56,11 @@ export default function ResetPasswordPage() {
           Desa la contrasenya
         </button>
       </form>
+      <p className="text-sm">
+        <a href="/forgot-password" className="underline">
+          Torna a demanar un enllaç
+        </a>
+      </p>
     </main>
   );
 }

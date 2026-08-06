@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/login`);
   }
 
-  if (next) {
+  if (next && next.startsWith("/") && !next.startsWith("//")) {
     return NextResponse.redirect(`${origin}${next}`);
   }
 

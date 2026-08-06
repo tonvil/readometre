@@ -7,8 +7,11 @@ export default function ForgotPasswordPage() {
   const [success, setSuccess] = useState(false);
 
   async function handleSubmit(formData: FormData) {
-    await requestPasswordReset(formData);
-    setSuccess(true);
+    try {
+      await requestPasswordReset(formData);
+    } finally {
+      setSuccess(true);
+    }
   }
 
   if (success) {
