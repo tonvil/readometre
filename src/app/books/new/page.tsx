@@ -48,23 +48,28 @@ export default function NewBookPage() {
 
   if (phase === "search") {
     return (
-      <main className="mx-auto mt-20 max-w-sm space-y-4">
-        <h1 className="text-2xl font-bold">Afegeix un llibre</h1>
+      <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-4 px-4">
+        <h1 className="font-display text-2xl font-bold text-ink">
+          Afegeix un llibre
+        </h1>
         <input
           value={isbn}
           onChange={(e) => setIsbn(e.target.value)}
           placeholder="ISBN"
-          className="w-full border p-2"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
         />
-        {searchError && <p className="text-sm text-red-600">{searchError}</p>}
+        {searchError && <p className="text-sm text-danger">{searchError}</p>}
         <button
           onClick={handleSearch}
           disabled={searching}
-          className="w-full bg-black p-2 text-white"
+          className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
         >
           {searching ? "Cercant..." : "Cerca"}
         </button>
-        <button onClick={handleManualEntry} className="w-full border p-2">
+        <button
+          onClick={handleManualEntry}
+          className="w-full rounded border border-field-border p-2 text-ink"
+        >
           Entrada manual
         </button>
       </main>
@@ -72,12 +77,14 @@ export default function NewBookPage() {
   }
 
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-4">
-      <h1 className="text-2xl font-bold">Confirma les dades</h1>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-4 px-4">
+      <h1 className="font-display text-2xl font-bold text-ink">
+        Confirma les dades
+      </h1>
       <form action={handleSave} className="space-y-4">
         <input type="hidden" name="isbn" value={isbn} />
         {readOnlyBook ? (
-          <div className="space-y-1 border p-2 text-sm">
+          <div className="space-y-1 rounded border border-panel-border bg-panel-bg p-3 text-sm text-ink">
             <p>
               <strong>{book.title}</strong>
             </p>
@@ -96,20 +103,20 @@ export default function NewBookPage() {
               defaultValue={book.title}
               placeholder="Títol"
               required
-              className="w-full border p-2"
+              className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
             />
             <input
               name="author"
               defaultValue={book.author}
               placeholder="Autor"
               required
-              className="w-full border p-2"
+              className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
             />
             <input
               name="genre"
               defaultValue={book.genre}
               placeholder="Gènere"
-              className="w-full border p-2"
+              className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
             />
             <input
               name="pageCount"
@@ -117,28 +124,49 @@ export default function NewBookPage() {
               defaultValue={book.pageCount}
               placeholder="Pàgines"
               min={1}
-              className="w-full border p-2"
+              className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
             />
           </>
         )}
-        <select name="status" defaultValue="reading" required className="w-full border p-2">
+        <select
+          name="status"
+          defaultValue="reading"
+          required
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink"
+        >
           <option value="reading">Llegint</option>
           <option value="finished">Finalitzat</option>
           <option value="abandoned">Abandonat</option>
         </select>
-        <input name="startDate" type="date" required className="w-full border p-2" />
-        <input name="endDate" type="date" className="w-full border p-2" />
+        <input
+          name="startDate"
+          type="date"
+          required
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink"
+        />
+        <input
+          name="endDate"
+          type="date"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink"
+        />
         <input
           name="rating"
           type="number"
           min={1}
           max={5}
           placeholder="Valoració (1-5)"
-          className="w-full border p-2"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
         />
-        <textarea name="notes" placeholder="Notes" className="w-full border p-2" />
-        {saveError && <p className="text-sm text-red-600">{saveError}</p>}
-        <button type="submit" className="w-full bg-black p-2 text-white">
+        <textarea
+          name="notes"
+          placeholder="Notes"
+          className="w-full rounded border border-field-border bg-field-bg p-2 text-ink placeholder:text-ink-muted"
+        />
+        {saveError && <p className="text-sm text-danger">{saveError}</p>}
+        <button
+          type="submit"
+          className="w-full rounded bg-accent p-2 font-semibold text-accent-ink"
+        >
           Desa
         </button>
       </form>
