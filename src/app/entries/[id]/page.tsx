@@ -84,10 +84,10 @@ export default async function EntryDetailPage({
         pageCount={entry.book.pageCount}
         isbn={entry.book.isbn}
       />
-      <SessionForm readingEntryId={entry.id} />
-      {entry.readingSessions.length > 0 && (
-        <Panel label="Sessions de lectura">
-          <ul className="space-y-1">
+      <Panel label="Sessions de lectura">
+        <SessionForm readingEntryId={entry.id} />
+        {entry.readingSessions.length > 0 && (
+          <ul className="mt-4 space-y-1">
             {entry.readingSessions.map((session) => (
               <SessionRow
                 key={session.id}
@@ -98,8 +98,8 @@ export default async function EntryDetailPage({
               />
             ))}
           </ul>
-        </Panel>
-      )}
+        )}
+      </Panel>
       <a
         href="/dashboard"
         className="inline-block rounded border border-field-border p-2 text-ink"

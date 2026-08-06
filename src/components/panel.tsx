@@ -11,11 +11,11 @@ export default function Panel({
 
   return (
     <div className="rounded-lg border border-panel-border bg-panel-bg p-4">
-      <h4
+      <h2
         className={`mb-2.5 text-[11px] font-medium uppercase tracking-wide ${labelColor}`}
       >
         {label}
-      </h4>
+      </h2>
       {children}
     </div>
   );

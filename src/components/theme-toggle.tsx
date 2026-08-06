@@ -26,7 +26,6 @@ export default function ThemeToggle({
     <button
       onClick={handleClick}
       className="text-sm text-ink-muted hover:text-ink"
-      aria-label="Canvia de tema clar/fosc"
     >
       {theme === "dark" ? "☀ Mode clar" : "☾ Mode fosc"}
     </button>

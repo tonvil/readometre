@@ -1,11 +1,11 @@
 export default function HomePage() {
   return (
-    <main className="mx-auto mt-20 max-w-sm space-y-6 text-center">
-      <h1 className="text-3xl font-bold">Diari de lectura</h1>
-      <p className="text-gray-600">Registra els llibres que llegeixes i segueix el teu hàbit lector.</p>
+    <main className="relative z-10 mx-auto mt-10 max-w-sm space-y-6 px-4 text-center">
+      <h1 className="font-display text-3xl font-bold text-ink">Diari de lectura</h1>
+      <p className="text-ink-muted">Registra els llibres que llegeixes i segueix el teu hàbit lector.</p>
       <div className="flex justify-center gap-4">
-        <a href="/login" className="border p-2">Inicia sessió</a>
-        <a href="/signup" className="bg-black p-2 text-white">Registra&apos;t</a>
+        <a href="/login" className="rounded border border-field-border p-2 text-ink">Inicia sessió</a>
+        <a href="/signup" className="rounded bg-accent p-2 font-semibold text-accent-ink">Registra&apos;t</a>
       </div>
     </main>
   );
